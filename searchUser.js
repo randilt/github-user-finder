@@ -12,8 +12,8 @@ async function searchUser() {
       if (response.ok) {
         const userData = await response.json();
 
-        // Display the user data
-        console.log("User Data:", userData);
+        // Display the user data on the page
+        displayUserData(userData); // calling the displayUserData function if no error is found
       } else {
         // Display an error if the response is not successful
         console.error("Error fetching user data:", response.statusText);
@@ -26,4 +26,24 @@ async function searchUser() {
     // Display an alert if the input is empty
     alert("Please enter a GitHub username.");
   }
+}
+
+function displayUserData(userData) {
+  // Access the results container
+  const resultsContainer = document.getElementById("resultsContainer");
+
+  // Clear previous results
+  resultsContainer.innerHTML = "";
+  const userCardHTML = `
+    <div class="user-card">
+      <img src="${userData.avatar_url}" alt="User Avatar">
+      <div class="user-info">
+        <p>Username: ${userData.login}</p>
+        <p>Name: ${userData.name || "Not provided"}</p>
+      </div>
+
+    </div>
+  `;
+
+  resultsContainer.innerHTML = userCardHTML;
 }
